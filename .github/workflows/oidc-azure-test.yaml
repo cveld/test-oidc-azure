@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
     steps:
+      - name: 'show secrets'
+        run: |
+          echo ${{ secrets.AZURE_CLIENT_ID }}
+          echo ${{ secrets.AZURE_TENANT_ID }}
+          echo ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: 'Az CLI login'
         uses: azure/login@v1
         with:
