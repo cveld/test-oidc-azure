@@ -10,8 +10,11 @@ jobs:
     steps:
       - name: curl into oidc endpoint
         run: |
-          curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=carl" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" > response.txt
+          mkdir artifact
+          echo $ACTIONS_ID_TOKEN_REQUEST_URL > artifact/ACTIONS_ID_TOKEN_REQUEST_URL.txt
+          echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN > artifact/ACTIONS_ID_TOKEN_REQUEST_TOKEN.txt
+          curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=carl" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" > artifact/response.txt
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
-          path: response.txt
+          path: artifact
