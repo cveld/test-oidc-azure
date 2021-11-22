@@ -8,5 +8,10 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=carl" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN"
+      - name: curl into oidc endpoint
+        run: |
+          curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=carl" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" > response.txt
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          path: response.txt
