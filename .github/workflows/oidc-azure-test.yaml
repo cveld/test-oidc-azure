@@ -25,7 +25,7 @@ jobs:
         env:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENTID }}          
         run: |
-          echo ${#AZURE_CLIENTID}
+          echo ${#AZURE_CLIENT_ID}
       - name: 'show secrets'
         run: |
           echo ${{ secrets.AZURE_CLIENTID }} > secrets.txt
