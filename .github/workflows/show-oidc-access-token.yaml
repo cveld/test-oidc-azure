@@ -8,10 +8,11 @@ permissions:
 jobs: 
   deployment:
     runs-on: ubuntu-latest
+    environment: Production
     env:
-      client-id: ${{ secrets.AZURE_CLIENTID }}
-      tenant-id: ${{ secrets.AZURE_TENANTID }}
-      subscription-id: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+      clientid: ${{ secrets.AZURE_CLIENTID }}
+      tenantid: ${{ secrets.AZURE_TENANTID }}
+      subscriptionid: ${{ secrets.AZURE_SUBSCRIPTIONID }}
     steps:
       - name: curl into oidc endpoint
         run: |
@@ -19,9 +20,9 @@ jobs:
           echo $ACTIONS_ID_TOKEN_REQUEST_URL > artifact/ACTIONS_ID_TOKEN_REQUEST_URL.txt
           echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN > artifact/ACTIONS_ID_TOKEN_REQUEST_TOKEN.txt
           curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=carl" -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" > artifact/response.txt
-          echo $client-id > artifact/cliend-id.txt
-          echo $tenant-id > artifact/tenant-id.txt
-          echo $subscription-id > artifact/subscription-id.txt          
+          echo $clientid > artifact/cliendid.txt
+          echo $tenantid > artifact/tenantid.txt
+          echo $subscriptionid > artifact/subscriptionid.txt          
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
         with:
